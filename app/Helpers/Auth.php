@@ -112,7 +112,7 @@ class Auth
     public static function registro(array $datos): bool
     {
         $usuario = new Usuario($datos);
-        $usuario->us_password = password_hash($datos['password'], PASSWORD_BCRYPT);
+        $usuario->us_password = password_hash($datos['us_password'], PASSWORD_BCRYPT);
 
         return $usuario->crear();
     }

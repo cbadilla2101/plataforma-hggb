@@ -16,7 +16,7 @@ class Auth
     {
         $usuario = Usuario::obtenerPorEmail($email);
 
-        if ($usuario && password_verify($password, $usuario->us_password)) {
+        if ($usuario && md5($password) === $usuario->us_password) {
             self::iniciarSesion($usuario);
 
             return true;
@@ -112,7 +112,7 @@ class Auth
     public static function registro(array $datos): bool
     {
         $usuario = new Usuario($datos);
-        $usuario->us_password = password_hash($datos['us_password'], PASSWORD_BCRYPT);
+        $usuario->us_password = md5($datos['us_password']);
 
         return $usuario->crear();
     }

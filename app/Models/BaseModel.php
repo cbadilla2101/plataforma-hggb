@@ -47,7 +47,7 @@ abstract class BaseModel
         $columns = array_keys($this->atributos);
         $columnList = implode(', ', $columns);
 
-        $placeholders = array_map(fn($col) => ':' . $col, $columns);
+		$placeholders = array_map(function($col) { return ':' . $col; }, $columns);
         $placeholderList = implode(', ', $placeholders);
 
         $stmt = static::$db->prepare("INSERT INTO " . static::TABLE_NAME . " ({$columnList}) VALUES ({$placeholderList})");
@@ -62,7 +62,7 @@ abstract class BaseModel
      */
     public function actualizar(): bool
     {
-        $setClause = implode(', ', array_map(fn($col) => "$col = :$col", array_keys($this->atributos)));
+        $setClause = implode(', ', array_map(function($col) { return "$col = :$col"; }, array_keys($this->atributos)));
 
         $idField = static::ATTRIBUTE_PREFIX . '_id';
 

@@ -98,12 +98,12 @@ class Route
      */
     public static function dispatch(): void
     {
-        $requestUri = $_SERVER['REQUEST_URI'];
+        $requestUri = rtrim($_SERVER['REQUEST_URI'], '/');
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
         foreach (self::$routes as $route) {
             if ($route['method'] === $requestMethod) {
-                $pattern = preg_replace('/\{(\w+)\}/', '([\w\-]+)', $route['route']);
+                $pattern = preg_replace('/\{(\w+)\}/', '([\w\-]+)', rtrim($route['route'], '/'));
 
                 if (preg_match('#^' . $pattern . '$#', $requestUri, $matches)) {
                     array_shift($matches);
